@@ -1,3 +1,5 @@
+
+
 import transparent from "../images/transparent.jpg";
 
 const About = () => {
@@ -55,9 +57,11 @@ const About = () => {
         </div>
 
         {/* Image Section */}
-        <div className="w-[200px] md:w-[300px] mx-auto rotate-0 
+        <div className="hidden md:flex w-[200px] md:w-[300px] mx-auto rotate-0 
         hover:rotate-12 hover:w-[300px] duration-300 transition">
-          <img src={transparent} alt="Edward Ogheneochuko" className="rounded-lg shadow-lg" />
+          <img src={transparent} alt="Edward Ogheneochuko" 
+               className="rounded-lg shadow-lg"
+               loading="lazy" />
         </div>
       </div>
     </div>

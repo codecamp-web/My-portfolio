@@ -10,7 +10,7 @@ const Dashboard = lazy(() => import('../pages/Dashboard'));
 const About = lazy(() => import('../pages/About'));
 const Works = lazy(() => import('../pages/Works'));
 const Experiences = lazy(() => import('../pages/Experiences'));
-const Contact =  lazy(() => import('../pages/Contact'))
+const Contact = lazy(() => import('../pages/Contact'));
 
 const socialLinks = [
     { icon: FaGithub, url: 'https://github.com/codecamp-web' },
@@ -36,10 +36,14 @@ const Loading = () => {
     const toggleMenu = useCallback(() => setOpen((prev) => !prev), []);
 
     return (
-        <div className={`flex flex-col  transition-all duration-300`}>
-            <nav className="fixed top-0 left-0 w-full bg-black text-white py-4 text-lg font-semibold px-12 z-10 flex justify-between items-center">
-                <div className="relative flex items-center justify-center 
-                 w-12 h-12 border-2 border-amber-400 rounded-full">
+        <div className="flex flex-col transition-all duration-300">
+            <motion.nav
+                initial={{ y: '-100%' }} // Start off-screen (above)
+                animate={{ y: 0 }}        // Animate to top
+                transition={{ duration: 0.5, ease: 'easeOut' }} // Timing for smooth drop
+                className="fixed top-0 left-0 w-full bg-black text-white py-4 text-lg font-semibold px-12 z-10 flex justify-between items-center"
+            >
+                <div className="relative flex items-center justify-center w-12 h-12 border-2 border-amber-400 rounded-full">
                     <h1 className="text-2xl font-bold">E</h1>
                 </div>
                 <motion.ul className="hidden md:flex gap-x-10 text-sm items-center">
@@ -57,11 +61,10 @@ const Loading = () => {
                         </a>
                     </motion.li>
                 </motion.ul>
-                <div className="md:hidden text-3xl text-amber-300 cursor-pointer"
-                 onClick={toggleMenu}>
+                <div className="md:hidden text-3xl text-amber-300 cursor-pointer" onClick={toggleMenu}>
                     <RiMenu3Fill />
                 </div>
-            </nav>
+            </motion.nav>
 
             {/* Mobile Menu */}
             <motion.div ref={drawerRef} initial={{ x: '100%' }} animate={{ x: open ? '0%' : '100%' }} transition={{ duration: 0.5, ease: 'easeInOut' }} className="md:hidden fixed top-0 right-0 w-2/3 h-full bg-neutral-900 text-white shadow-lg z-10 flex-col p-6">
@@ -95,23 +98,26 @@ const Loading = () => {
                 <div className="w-0.5 h-30 bg-white"></div>
             </aside>
 
+            {/* Email Link - Opens Email Client */}
             <aside className="hidden md:flex fixed top-40 right-0 h-full flex-col items-center justify-center w-30">
-                <motion.a className="text-white transition duration-75 text-md font-medium transform rotate-90 tracking-widest hover:text-yellow-400" href="#">
+                <motion.a
+                    className="text-white transition duration-75 text-md font-medium transform rotate-90 tracking-widest hover:text-yellow-400 cursor-pointer"
+                    href="mailto:headiesed@gmail.com?subject=Hello Edward!&body=Hi Edward, I wanted to reach out regarding..."
+                >
                     headiesed@gmail.com
                 </motion.a>
             </aside>
 
             {/* Main Content */}
-            <main className={`mx-5  md:mx-auto md:w-2/3 text-white ${open ? 'blur-md md:blur-none' : ''} px-4 sm:px-6`}>
-            <Suspense fallback={<div>Loading...</div>}>
-               <Dashboard />
-               <section id="about"><About /></section>
-               <section id="experience"><Experiences /></section>
-               <section id="works"><Works /></section>
-               <section id='contact'><Contact /></section>
-            </Suspense>
+            <main className={`mx-5 md:mx-auto md:w-2/3 text-white ${open ? 'blur-md md:blur-none' : ''} px-4 sm:px-6`}>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Dashboard />
+                    <section id="about"><About /></section>
+                    <section id="experience"><Experiences /></section>
+                    <section id="works"><Works /></section>
+                    <section id="contact"><Contact /></section>
+                </Suspense>
             </main>
-
         </div>
     );
 };
